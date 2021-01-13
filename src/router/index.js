@@ -19,7 +19,7 @@ const routes = [
     redirect: "/groups",
   },
   {
-    path: "/groups",
+    path: "/groups/",
     name: "GroupsView",
     components: {
       nav: Nav,
@@ -27,7 +27,7 @@ const routes = [
     },
   },
   {
-    path: "/patterns",
+    path: "/patterns/",
     name: "PatternsView",
     components: {
       nav: Nav,

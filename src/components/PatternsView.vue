@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
 
-      <div class="pattern" v-for="record in patterns" v-bind:key="record.id">
+      <div class="pattern" v-for="record in patterns" v-bind:key="record.id" :id="toAnchorSlug(record.fields['Name'])">
         <div class="pattern_name">{{ record.fields["Name"] }}</div>
         <div
           class="fieldpattern"
@@ -9,39 +9,42 @@
           :key="field"
         >
         <template v-if="field != 'Name'">
+
           <div class="label">{{ field }} </div>
-          <div :class="field">  {{ record.fields[field] }} </div>
+
+          <template v-if="field == 'Groups'">
+            <div v-for="p in record.fields['Groups']" :class="field" :key="p">
+
+              <router-link :to="{ name: 'GroupsView', hash: '#' + toAnchorSlug(lookupGroup(p).fields['Name']) }"> {{ lookupGroup(p).fields['Name'] }} </router-link>
+            </div>
+          </template>
+          <template v-else>
+            <div :class="field">  {{ record.fields[field] }} </div>
+          </template>
+
+
         </template>
         </div>
+
     </div>
   </div>
 </template>
 
 <script>
 
+import hyperlinkTools from '@/mixins/hyperlinkTools.js'
+
 export default {
   name: "PatternsView",
   data() {
     return {};
   },
+  mixins: [hyperlinkTools],
   components: {
   },
   methods: {
   },
   computed: {
-    groups() {
-      return this.$store.getters.groups;
-    },
-    patterns() {
-      return this.$store.getters.patterns;
-    },
-    allFields() {
-      try { 
-        return Object.keys(this.records[0].fields)
-      } catch {
-        return []
-      }
-    },
   },
 };
 </script>

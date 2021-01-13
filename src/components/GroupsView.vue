@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
 
-      <div class="group" v-for="record in groups" v-bind:key="record.id">
+      <div class="group" v-for="record in groups" v-bind:key="record.id" :id="toAnchorSlug(record.fields['Name'])">
         <div class="group_name">{{ record.fields["Name"] }}</div>
         <div
           class="fieldgroup"
@@ -9,8 +9,18 @@
           :key="field"
         >
         <template v-if="field != 'Name'">
+
           <div class="label">{{ field }} </div>
+
+          <template v-if="field == 'Patterns'">
+            <div v-for="p in record.fields['Patterns']" :class="field" :key="p">
+              <router-link :to="{ name: 'PatternsView', hash: '#' + toAnchorSlug(lookupPattern(p).fields['Name']) }"> {{ lookupPattern(p).fields['Name'] }} </router-link>
+            </div>
+          </template>
+          <template v-else>
           <div :class="field">  {{ findAndReplaceReference(record.fields[field]) }} </div>
+          </template>
+
         </template>
         </div>
 
@@ -21,30 +31,17 @@
 
 <script>
 
+import hyperlinkTools from '@/mixins/hyperlinkTools.js'
+
 export default {
   name: "GroupsView",
   data() {
     return {};
   },
+  mixins: [hyperlinkTools],
   components: {
   },
   methods: {
-    lookupGroup(idorname) {
-      if(idorname in this.groups) {
-        return this.groups[idorname]
-      }
-      if(idorname in this.groupsByName) {
-        return this.groupsByName[idorname]
-      }
-    },
-    lookupPattern(idorname) {
-      if(idorname in this.patterns) {
-        return this.patterns[idorname]
-      }
-      if(idorname in this.patternsByName) {
-        return this.patternsByName[idorname]
-      }
-    },
     createPatternLink(fname) {
       return fname;
 //      return `<b>${fname}</b>`;
@@ -66,25 +63,6 @@ export default {
     }
   },
   computed: {
-    patterns() {
-      return this.$store.getters.patterns;
-    },
-    groups() {
-      return this.$store.getters.groups;
-    },
-    groupsByName() {
-      return this.$store.getters.groupsByName;
-    },
-    patternsByName() {
-      return this.$store.getters.patternsByName;
-    },
-    allFields() {
-      try { 
-        return Object.keys(this.records[0].fields)
-      } catch {
-        return []
-      }
-    },
   },
 };
 </script>
@@ -101,7 +79,7 @@ export default {
 
 .group {
   padding: 20px;
-  border: 2px dashed black;
+  border: 2px solid black;
   margin-bottom: 20px;
 }
 
