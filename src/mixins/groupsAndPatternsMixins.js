@@ -1,8 +1,4 @@
  export default {
-   data () {
-   },
-   created: function () {
-   },
    computed: {
     patterns() {
       return this.$store.getters.patterns;
@@ -45,5 +41,12 @@
         return this.groupsByName[idorname]
       }
     },
-   }
+  },
+  mounted() {
+    if(this.$route.hash) {
+      const el = document.querySelector(this.$route.hash)
+      el && el.classList.add("anchorlinked");
+      el && el.scrollIntoView()
+    }
+  }
 }

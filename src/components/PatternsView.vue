@@ -1,30 +1,29 @@
 <template>
-  <div class="hello">
+  <div class="patterns">
 
-      <div class="pattern" v-for="record in patterns" v-bind:key="record.id" :id="toAnchorSlug(record.fields['Name'])">
-        <div class="pattern_name">{{ record.fields["Name"] }}</div>
-        <div
-          class="fieldpattern"
-          v-for="field in Object.keys(record.fields)"
-          :key="field"
-        >
-        <template v-if="field != 'Name'">
+    <div class="pattern" v-for="(record, name) in patternsByName" v-bind:key="record.id" :id="toAnchorSlug(name)">
 
-          <div class="label">{{ field }} </div>
+      <div class="pattern_name">{{ name }}</div>
 
-          <template v-if="field == 'Groups'">
-            <div v-for="p in record.fields['Groups']" :class="field" :key="p">
+      <div v-for="p in record.fields['Groups']" class="related-groups" :key="p">
+        <router-link :to="{ name: 'GroupsView', hash: '#' + toAnchorSlug(lookupGroup(p).fields['Name']) }">
+          {{ lookupGroup(p).fields['Name'] }}
+        </router-link>
+      </div>
 
-              <router-link :to="{ name: 'GroupsView', hash: '#' + toAnchorSlug(lookupGroup(p).fields['Name']) }"> {{ lookupGroup(p).fields['Name'] }} </router-link>
-            </div>
-          </template>
-          <template v-else>
-            <div :class="field">  {{ record.fields[field] }} </div>
-          </template>
+      <div
+        class="fieldpattern"
+        v-for="fieldname in Object.keys(record.fields)"
+        :key="fieldname"
+      >
+      <template v-if="fieldname != 'Name' && fieldname != 'Groups'">
 
+        <div class="label">{{ fieldname }} </div>
 
-        </template>
-        </div>
+        <div :class="fieldname">  {{ record.fields[fieldname] }} </div>
+
+      </template>
+      </div>
 
     </div>
   </div>
@@ -32,14 +31,14 @@
 
 <script>
 
-import hyperlinkTools from '@/mixins/hyperlinkTools.js'
+import groupsAndPatternsMixins from '@/mixins/groupsAndPatternsMixins.js'
 
 export default {
   name: "PatternsView",
   data() {
     return {};
   },
-  mixins: [hyperlinkTools],
+  mixins: [groupsAndPatternsMixins],
   components: {
   },
   methods: {
@@ -63,6 +62,11 @@ export default {
   padding: 20px;
   border: 2px dashed black;
   margin-bottom: 20px;
+
+  &.anchorlinked {
+    background-color: white;
+  }
+
 }
 
 .fieldpattern {
