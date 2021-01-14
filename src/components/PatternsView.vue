@@ -20,7 +20,7 @@
 
         <div class="label">{{ fieldname }} </div>
 
-        <div :class="fieldname">  {{ record.fields[fieldname] }} </div>
+          <div :class="fieldname"><vue-markdown>{{record.fields[fieldname] }} </vue-markdown></div>
 
       </template>
       </div>
@@ -32,6 +32,7 @@
 <script>
 
 import groupsAndPatternsMixins from '@/mixins/groupsAndPatternsMixins.js'
+import VueMarkdown from '@adapttive/vue-markdown'
 
 export default {
   name: "PatternsView",
@@ -40,6 +41,7 @@ export default {
   },
   mixins: [groupsAndPatternsMixins],
   components: {
+    VueMarkdown
   },
   methods: {
   },
@@ -50,23 +52,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
-.label {
-  text-transform: uppercase;
-  font-size: 0.7em;
-  font-weight: bold;
+.patterns {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 
 .pattern {
+  width: 40%;
+  max-width: 500px;
+  min-width: 300px;
   padding: 20px;
-  border: 2px dashed black;
-  margin-bottom: 20px;
+  border: 3px dotted black;
+  margin: 20px;
+  border-radius: 10px;
 
   &.anchorlinked {
     background-color: white;
   }
-
 }
 
 .fieldpattern {
@@ -77,4 +82,10 @@ export default {
   font-size: 1.5em;
   margin-bottom: 10px;
 }
+.label {
+  text-transform: uppercase;
+  font-size: 0.7em;
+  font-weight: bold;
+}
+
 </style>

@@ -22,7 +22,7 @@
 
           <div class="label">{{ fieldname }} </div>
 
-          <div :class="fieldname">{{ findAndReplaceReference(record.fields[fieldname]) }} </div>
+          <div :class="fieldname"><vue-markdown>{{ findAndReplaceReference(record.fields[fieldname]) }} </vue-markdown></div>
 
         </template>
       </div>
@@ -35,6 +35,7 @@
 <script>
 
 import groupsAndPatternsMixins from '@/mixins/groupsAndPatternsMixins.js'
+import VueMarkdown from '@adapttive/vue-markdown'
 
 export default {
   name: "GroupsView",
@@ -43,6 +44,7 @@ export default {
   },
   mixins: [groupsAndPatternsMixins],
   components: {
+    VueMarkdown
   },
   methods: {
     createPatternLink(fname) {
