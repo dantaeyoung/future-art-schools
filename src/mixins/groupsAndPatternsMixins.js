@@ -26,6 +26,7 @@
         return str.trim().replace(/\s+/g, '-').replace(/[^\w\s]/gi, '').toLowerCase();
       },
     lookupPattern(idorname) {
+      console.log(idorname);
       if(idorname in this.patterns) {
         return this.patterns[idorname]
       }

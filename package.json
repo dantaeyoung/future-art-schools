@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "airtable": "^0.10.1",
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.2",
     "howler": "^2.2.1",
-    "vue": "^2.6.11",
-    "vue-router": "^3.4.3",
-    "vuex": "^3.5.1",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.9",
+    "vuex": "^3.6.0",
     "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
@@ -24,9 +24,9 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "node-sass": "^4.14.1",
-    "sass": "^1.26.10",
+    "sass": "^1.32.4",
     "sass-loader": "^9.0.3",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "eslintConfig": {
     "root": true,

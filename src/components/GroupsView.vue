@@ -5,10 +5,12 @@
 
       <div class="group_name">{{ name }}</div>
 
-      <div v-for="p in record.fields['Patterns']" class="patterns" :key="p">
-        <router-link :to="{ name: 'PatternsView', hash: '#' + toAnchorSlug(lookupPattern(p).fields['Name']) }">
-          {{ lookupPattern(p) }}
-        </router-link>
+      <div class="patterns">
+        <div v-for="p in record.fields['Patterns']" class="pattern" :key="p">
+          <router-link :to="{ name: 'PatternsView', hash: '#' + toAnchorSlug(lookupPattern(p).fields['Name']) }">
+            {{ lookupPattern(p).fields["Name"] }}
+          </router-link>
+        </div>
       </div>
 
       <div
@@ -77,7 +79,9 @@ export default {
   justify-content: center;
 }
 
-
+.patterns {
+  margin-bottom: 10px;
+}
 
 
 .group {
